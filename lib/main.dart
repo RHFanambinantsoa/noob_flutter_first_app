@@ -65,6 +65,8 @@ class MyHomePage extends StatefulWidget { //StatefulWidget, un type de widget av
   State<MyHomePage> createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State et peut donc gérer ses propres valeurs. (Elle peut changer d'elle-même.)
+  var selectedIndex = 0; 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +85,11 @@ class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State e
                   label: Text('Favorites'),
                 ),
               ],
-              selectedIndex: 0,
+               selectedIndex: selectedIndex, 
               onDestinationSelected: (value) { //définit ce qui se passe lorsque l'utilisateur sélectionne l'une des destinations (value == index)
-                print('selected: $value');
+                 setState(() { //setState() est semblable à la méthode notifyListeners() et garantit la mise à jour de l'UI
+                  selectedIndex = value;
+                });
               },
             ),
           ),
