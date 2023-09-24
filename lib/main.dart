@@ -113,7 +113,12 @@ class BigCard extends StatelessWidget {
         //Cela crée un widget parent appelé Padding autour du widget Text. 
         //Après avoir enregistré, notez que le mot aléatoire dispose plus d'espace.
         padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase, style: style),
+      child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+          //Maintenant, les lecteurs d'écrans prononcent correctement chaque paire de mots générée sans que l'UI ait changé.
+        ),
       ),
     );
   }
