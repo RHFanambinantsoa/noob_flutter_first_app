@@ -55,6 +55,7 @@ class MyHomePage extends StatelessWidget {
 
     var appState = context.watch<MyAppState>();
     //MyHomePage suit les modifications de l'état actuel de l'application avec la méthode watch.
+    var pair = appState.current; 
 
     return Scaffold(
       //Chaque méthode build doit renvoyer un widget ou (plus généralement) une arborescence de widgets imbriquée. 
@@ -65,7 +66,7 @@ class MyHomePage extends StatelessWidget {
         //Par défaut, la colonne place visuellement ses enfants en haut.
         children: [
           Text('A random idea:'),
-          Text(appState.current.asLowerCase),
+          BigCard(pair: pair),
           //Ce second widget Text accepte appState et accède au seul membre de la classe, current (qui est une WordPair). 
           //WordPair fournit plusieurs getters utiles, comme asPascalCase ou asSnakeCase. 
           //Dans notre cas, nous utilisons asLowerCase
@@ -78,5 +79,20 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+//refactor (ctrl + .) eo amin'ilay widget ohatra hoe Text izy teto -> Extract Widget (Extraire le widget)
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(pair.asLowerCase);
   }
 }
