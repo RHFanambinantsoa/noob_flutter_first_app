@@ -60,23 +60,26 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       //Chaque méthode build doit renvoyer un widget ou (plus généralement) une arborescence de widgets imbriquée. 
       //Dans ce cas, le widget de premier niveau est Scaffold
-      body: Column(
-        //Column est l'un des principaux widgets de mise en page de Flutter. 
-        //Il accepte un nombre illimité d'enfants et les place dans une colonne, de haut en bas. 
-        //Par défaut, la colonne place visuellement ses enfants en haut.
-        children: [
-          Text('A random idea:'),
-          BigCard(pair: pair),
-          //Ce second widget Text accepte appState et accède au seul membre de la classe, current (qui est une WordPair). 
-          //WordPair fournit plusieurs getters utiles, comme asPascalCase ou asSnakeCase. 
-          //Dans notre cas, nous utilisons asLowerCase
-          ElevatedButton(
-            onPressed: () {
-                appState.getNext(); //appelle de fonction     
-                },
-            child: Text('Next'),
-          ),
-        ],
+      body: Center(
+        //refactor -> wrap with center
+        child: Column(
+          //Column est l'un des principaux widgets de mise en page de Flutter. 
+          //Il accepte un nombre illimité d'enfants et les place dans une colonne, de haut en bas. 
+          //Par défaut, la colonne place visuellement ses enfants en haut.
+      
+          mainAxisAlignment: MainAxisAlignment.center, //permet de centrer l'enfant dans la Column, le long de l'axe principal (verticalement).
+      
+          children: [
+            BigCard(pair: pair),            
+            SizedBox(height: 10,), //Le widget SizedBox prend de la place sans rien afficher directement. Il est communément utilisé pour créer des séparations visuelles.
+            ElevatedButton(
+              onPressed: () {
+                  appState.getNext(); //appelle de fonction     
+                  },
+              child: Text('Next'),
+            ),
+          ],
+        ),
       ),
     );
   }
