@@ -38,6 +38,13 @@ class MyAppState extends ChangeNotifier {
   //(voir le code ci-dessus dans MyApp). 
   //Cela permet de communiquer l'état à tous les widgets de l'application.
   var current = WordPair.random();
+
+   void getNext() {
+    //getNext() réattribue current à une nouvelle WordPair aléatoire. 
+    //Elle appelle également notifyListeners() (une méthode de ChangeNotifier) qui garantit que toute personne surveillant MyAppState est informée.
+    current = WordPair.random();
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -64,8 +71,8 @@ class MyHomePage extends StatelessWidget {
           //Dans notre cas, nous utilisons asLowerCase
           ElevatedButton(
             onPressed: () {
-              print('button pressed!');
-            },
+                appState.getNext(); //appelle de fonction     
+                },
             child: Text('Next'),
           ),
         ],
