@@ -69,6 +69,18 @@ class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State e
 
   @override
   Widget build(BuildContext context) {
+    Widget page; //variable page de type widget
+    switch (selectedIndex) { //"switch" attribue alors un écran à page en fonction de l'actuelle valeur de selectedIndex.
+      case 0:
+        page = GeneratorPage();
+        break;
+      case 1:
+        page = Placeholder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedIndex');
+    }
+
     return Scaffold(
       body: Row(
         children: [
@@ -99,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State e
             //et que les autres widgets doivent occuper le plus d'espace restant possible (Expanded, dans ce cas)
             child: Container(
               color: Theme.of(context).colorScheme.primaryContainer,
-              child: GeneratorPage(),
+              child: page, //afficher la page en fonction de l'index selectionné eo ambony
             ),
           ),
         ],
