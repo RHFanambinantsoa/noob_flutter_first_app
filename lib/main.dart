@@ -91,11 +91,15 @@ class BigCard extends StatelessWidget {
 
   final WordPair pair;
 
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); //le code demande le thème actuel de l'application avec Theme.of(context)
+
     return Card(
-      //Wrap with widget sur padding… (Encapsuler avec un widget).
-      //Cela vous permet de spécifier le widget parent.
+      color: theme.colorScheme.primary,
+      //le code définit la couleur de la carte de sorte qu'elle soit identique à la propriété colorScheme du thème. 
+      //Le jeu de couleurs comporte de nombreuses couleurs, primary étant la couleur prédominante qui définit l'application.
       child: Padding(
         //Refactor dans le widget Text. Wrap with Padding (Encapsuler avec une marge intérieure). 
         //Cela crée un widget parent appelé Padding autour du widget Text. 
