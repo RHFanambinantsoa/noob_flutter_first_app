@@ -58,7 +58,13 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+
+class MyHomePage extends StatefulWidget { //StatefulWidget, un type de widget avec un State
+//refactor sur myhomepage teo aloha izay statelesswidget -> convert to statefulwidget 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State et peut donc gérer ses propres valeurs. (Elle peut changer d'elle-même.)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
