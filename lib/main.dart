@@ -61,6 +61,45 @@ class MyAppState extends ChangeNotifier {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          SafeArea( //SafeArea garantit que l'enfant n'est pas masqué par une encoche matérielle ni une barre d'état
+            child: NavigationRail(
+              extended: false, //Vous pouvez passer la ligne extended: false de NavigationRail sur true. Cela permet d'afficher les libellés en regard des icônes.
+              destinations: [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home),
+                  label: Text('Home'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.favorite),
+                  label: Text('Favorites'),
+                ),
+              ],
+              selectedIndex: 0,
+              onDestinationSelected: (value) { //définit ce qui se passe lorsque l'utilisateur sélectionne l'une des destinations (value == index)
+                print('selected: $value');
+              },
+            ),
+          ),
+          Expanded(
+            // Les widgets "Expanded" sont particulièrement utiles dans les lignes et les colonnes. 
+            //Ils permettent d'exprimer la mise en page lorsque certains enfants n'utilisent que l'espace dont ils ont besoin (NavigationRail, dans ce cas) 
+            //et que les autres widgets doivent occuper le plus d'espace restant possible (Expanded, dans ce cas)
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: GeneratorPage(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+class GeneratorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     //Chaque widget définit une méthode build() automatiquement appelée dès que les conditions du widget changent, 
     //de sorte qu'il soit toujours à jour.
 
