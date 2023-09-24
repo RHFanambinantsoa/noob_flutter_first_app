@@ -93,12 +93,16 @@ class BigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      //Refactor dans le widget Text. Wrap with Padding (Encapsuler avec une marge intérieure). 
-      //Cela crée un widget parent appelé Padding autour du widget Text. 
-      //Après avoir enregistré, notez que le mot aléatoire dispose plus d'espace.
-      padding: const EdgeInsets.all(20.0),
-      child: Text(pair.asLowerCase),
+    return Card(
+      //Wrap with widget sur padding… (Encapsuler avec un widget).
+      //Cela vous permet de spécifier le widget parent.
+      child: Padding(
+        //Refactor dans le widget Text. Wrap with Padding (Encapsuler avec une marge intérieure). 
+        //Cela crée un widget parent appelé Padding autour du widget Text. 
+        //Après avoir enregistré, notez que le mot aléatoire dispose plus d'espace.
+        padding: const EdgeInsets.all(20.0),
+        child: Text(pair.asLowerCase),
+      ),
     );
   }
 }
