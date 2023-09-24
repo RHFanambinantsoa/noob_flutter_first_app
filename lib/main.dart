@@ -45,6 +45,17 @@ class MyAppState extends ChangeNotifier {
     current = WordPair.random();
     notifyListeners();
   }
+
+   var favorites = <WordPair>[];
+
+  void toggleFavorite() { //Elle permet d'ajouter ou de supprimer l'actuelle paire de mots dans la liste des favoris (selon qu'elle s'y trouve ou non).
+    if (favorites.contains(current)) {
+      favorites.remove(current);
+    } else {
+      favorites.add(current);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatelessWidget {
@@ -56,6 +67,13 @@ class MyHomePage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
     //MyHomePage suit les modifications de l'état actuel de l'application avec la méthode watch.
     var pair = appState.current; 
+
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
 
     return Scaffold(
       //Chaque méthode build doit renvoyer un widget ou (plus généralement) une arborescence de widgets imbriquée. 
@@ -72,11 +90,24 @@ class MyHomePage extends StatelessWidget {
           children: [
             BigCard(pair: pair),            
             SizedBox(height: 10,), //Le widget SizedBox prend de la place sans rien afficher directement. Il est communément utilisé pour créer des séparations visuelles.
-            ElevatedButton(
-              onPressed: () {
-                  appState.getNext(); //appelle de fonction     
+            Row( //wrap with row
+              mainAxisSize: MainAxisSize.min, //indique à la Row qu'elle ne doit pas occuper tout l'espace horizontal disponible.
+              children: [
+                ElevatedButton.icon( //créer un bouton avec une icône
+                  onPressed: () {
+                    appState.toggleFavorite();
                   },
-              child: Text('Next'),
+                  icon: Icon(icon),
+                  label: Text('Like'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                      appState.getNext(); //appelle de fonction     
+                      },
+                  child: Text('Next'),
+                ),
+              ],
             ),
           ],
         ),
