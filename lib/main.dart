@@ -95,7 +95,15 @@ class BigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context); //le code demande le thème actuel de l'application avec Theme.of(context)
-
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+    //theme.textTheme, permet d'accéder au thème des polices. Cette classe comprend des membres comme bodyMedium (pour le texte standard de taille moyenne), caption (pour les captures d'images) ou headlineLarge (pour les gros titres).
+    //La propriété displayMedium est un grand style prévu pour le titrage du texte. "les styles de titrage sont réservés aux textes courts et importants" 
+    //En théorie, la propriété displayMedium du thème peut être null. Dart (le langage de programmation utilisé pour écrire cette application) est null-safe et ne permet donc pas d'appeler les méthodes d'objets potentiellement null. Dans ce cas, vous pouvez toutefois utiliser l'opérateur ! ("opérateur bang") pour indiquer à Dart que vous savez ce que vous faites
+    //Appeler copyWith() sur displayMedium renvoie une copie du style de texte avec les modifications que vous avez apportées. Dans ce cas, vous n'avez fait que modifier la couleur du texte.
+    //Pour obtenir la nouvelle couleur, accédez de nouveau au thème de l'application. La propriété onPrimary du jeu de couleurs définit une couleur adaptée pour apparaître au-dessus de la couleur principale de l'application.
+    
     return Card(
       color: theme.colorScheme.primary,
       //le code définit la couleur de la carte de sorte qu'elle soit identique à la propriété colorScheme du thème. 
@@ -105,7 +113,7 @@ class BigCard extends StatelessWidget {
         //Cela crée un widget parent appelé Padding autour du widget Text. 
         //Après avoir enregistré, notez que le mot aléatoire dispose plus d'espace.
         padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase),
+        child: Text(pair.asLowerCase, style: style),
       ),
     );
   }
