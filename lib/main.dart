@@ -81,41 +81,51 @@ class _MyHomePageState extends State<MyHomePage> { //Cette classe étend State e
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
-    return Scaffold(
-      body: Row(
-        children: [
-          SafeArea( //SafeArea garantit que l'enfant n'est pas masqué par une encoche matérielle ni une barre d'état
-            child: NavigationRail(
-              extended: false, //Vous pouvez passer la ligne extended: false de NavigationRail sur true. Cela permet d'afficher les libellés en regard des icônes.
-              destinations: [
-                NavigationRailDestination(
-                  icon: Icon(Icons.home),
-                  label: Text('Home'),
+    return LayoutBuilder(
+      //Le rappel builder de LayoutBuilder est appelé à chaque fois que les contraintes changent. Il peut s'agir des cas suivants :
+      //L'utilisateur redimensionne la fenêtre de l'application.
+      //L'utilisateur bascule son téléphone du mode portrait en mode paysage, et inversement.
+      // La taille d'un widget en regard de MyHomePage augmente, ce qui réduit les contraintes de MyHomePage.
+      // Et ainsi de suite.
+
+      builder: (context, constraints) {
+        return Scaffold( //scaffold refactor -> wrap with builder -> layoutBuilder
+          body: Row(
+            children: [
+              SafeArea( //SafeArea garantit que l'enfant n'est pas masqué par une encoche matérielle ni une barre d'état
+                child: NavigationRail(
+                  extended: constraints.maxWidth >= 600, //Vous pouvez passer la ligne extended: false de NavigationRail sur true. Cela permet d'afficher les libellés en regard des icônes.
+                  destinations: [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.home),
+                      label: Text('Home'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.favorite),
+                      label: Text('Favorites'),
+                    ),
+                  ],
+                   selectedIndex: selectedIndex, 
+                  onDestinationSelected: (value) { //définit ce qui se passe lorsque l'utilisateur sélectionne l'une des destinations (value == index)
+                     setState(() { //setState() est semblable à la méthode notifyListeners() et garantit la mise à jour de l'UI
+                      selectedIndex = value;
+                    });
+                  },
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.favorite),
-                  label: Text('Favorites'),
+              ),
+              Expanded(
+                // Les widgets "Expanded" sont particulièrement utiles dans les lignes et les colonnes. 
+                //Ils permettent d'exprimer la mise en page lorsque certains enfants n'utilisent que l'espace dont ils ont besoin (NavigationRail, dans ce cas) 
+                //et que les autres widgets doivent occuper le plus d'espace restant possible (Expanded, dans ce cas)
+                child: Container(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: page, //afficher la page en fonction de l'index selectionné eo ambony
                 ),
-              ],
-               selectedIndex: selectedIndex, 
-              onDestinationSelected: (value) { //définit ce qui se passe lorsque l'utilisateur sélectionne l'une des destinations (value == index)
-                 setState(() { //setState() est semblable à la méthode notifyListeners() et garantit la mise à jour de l'UI
-                  selectedIndex = value;
-                });
-              },
-            ),
+              ),
+            ],
           ),
-          Expanded(
-            // Les widgets "Expanded" sont particulièrement utiles dans les lignes et les colonnes. 
-            //Ils permettent d'exprimer la mise en page lorsque certains enfants n'utilisent que l'espace dont ils ont besoin (NavigationRail, dans ce cas) 
-            //et que les autres widgets doivent occuper le plus d'espace restant possible (Expanded, dans ce cas)
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: page, //afficher la page en fonction de l'index selectionné eo ambony
-            ),
-          ),
-        ],
-      ),
+        );
+      }
     );
   }
 }
